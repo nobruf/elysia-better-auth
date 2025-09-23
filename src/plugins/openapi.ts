@@ -1,4 +1,4 @@
-import { auth } from "@/modules/auth";
+import { auth } from "@/auth";
 
 let _schema: ReturnType<typeof auth.api.generateOpenAPISchema>;
 const getSchema = async () => (_schema ??= auth.api.generateOpenAPISchema());

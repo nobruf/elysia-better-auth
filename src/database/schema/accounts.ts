@@ -2,6 +2,7 @@ import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { users } from "./users";
 import { randomUUIDv7 } from "bun";
 
+
 export const accounts = pgTable("accounts", {
   id: text("id")
     .primaryKey()
@@ -22,4 +23,4 @@ export const accounts = pgTable("accounts", {
   updatedAt: timestamp("updated_at")
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
-});
+  });

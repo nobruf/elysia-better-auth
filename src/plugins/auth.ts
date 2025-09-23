@@ -1,4 +1,4 @@
-import { auth } from "@/modules/auth";
+import { auth } from "@/auth";
 import Elysia from "elysia";
 
 export const authRoutes = new Elysia({
