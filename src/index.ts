@@ -3,8 +3,10 @@ import { openapi } from "@elysiajs/openapi";
 import { OpenAPI } from "@/plugins/openapi";
 import { authRoutes, authMiddleware } from "@/plugins/auth";
 import { usersController } from "@/modules/users";
+import { cors } from '@elysiajs/cors'
 
 const app = new Elysia()
+  .use(cors())
   .use(authRoutes)
   .use(authMiddleware)
   .use(
