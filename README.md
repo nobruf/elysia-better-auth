@@ -34,7 +34,7 @@ Uma API moderna e robusta construída com **Elysia**, **Better Auth** e **Drizzl
 
 ```bash
 # Clone o repositório
-git clone <seu-repo>
+git clone https://github.com/nobruf/elysia-better-auth.git
 cd app
 
 # Instale as dependências
