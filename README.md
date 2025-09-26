@@ -1,161 +1,167 @@
-# 🚀 Elysia API com Better Auth
+# 🚀 Elysia API with Better Auth
 
-Uma API moderna e robusta construída com **Elysia**, **Better Auth** e **Drizzle ORM**, rodando no runtime **Bun**.
+A modern and robust API built with **Elysia**, **Better Auth** and **Drizzle ORM**, running on **Bun** runtime.
 
-## ✨ Características
+> **Note:** This is the **main branch** - basic version without organization features. For the multi-tenant organization version, check the `organization` branch.
 
-- ⚡ **Ultra-rápida** - Powered by Bun runtime
-- 🔐 **Autenticação completa** - Better Auth com email/password
-- 📊 **Banco de dados** - PostgreSQL com Drizzle ORM
-- 📝 **Documentação automática** - OpenAPI/Swagger integrado
-- 🛡️ **Tipagem forte** - TypeScript em toda aplicação
-- 🏗️ **Arquitetura modular** - Organização limpa e escalável
+## ✨ Features
 
-## 🛠️ Stack Tecnológica
+- ⚡ **Ultra-fast** - Powered by Bun runtime
+- 🔐 **Complete authentication** - Better Auth with email/password
+- 📊 **Database** - PostgreSQL with Drizzle ORM
+- 📝 **Automatic documentation** - Integrated OpenAPI/Swagger
+- 🛡️ **Strong typing** - TypeScript throughout the application
+- 🏗️ **Modular architecture** - Clean and scalable organization
 
-| Tecnologia | Descrição |
-|------------|-----------|
-| [Elysia](https://elysiajs.com/) | Framework web ultra-rápido para Bun |
-| [Better Auth](https://www.better-auth.com/) | Sistema de autenticação moderno |
-| [Drizzle ORM](https://orm.drizzle.team/) | ORM type-safe para TypeScript |
-| [Bun](https://bun.sh/) | Runtime JavaScript ultra-rápido |
-| [PostgreSQL](https://postgresql.org/) | Banco de dados relacional |
-| [Zod](https://zod.dev/) | Validação de esquemas TypeScript |
+## 🛠️ Tech Stack
 
-## 🚦 Início Rápido
+| Technology                                  | Description                       |
+| ------------------------------------------- | --------------------------------- |
+| [Elysia](https://elysiajs.com/)             | Ultra-fast web framework for Bun |
+| [Better Auth](https://www.better-auth.com/) | Modern authentication system     |
+| [Drizzle ORM](https://orm.drizzle.team/)    | Type-safe ORM for TypeScript     |
+| [Bun](https://bun.sh/)                      | Ultra-fast JavaScript runtime    |
+| [PostgreSQL](https://postgresql.org/)       | Relational database              |
+| [Zod](https://zod.dev/)                     | TypeScript schema validation     |
 
-### Pré-requisitos
+## 🚦 Quick Start
 
-- [Bun](https://bun.sh/) instalado
-- PostgreSQL rodando
-- Node.js 18+ (para algumas dependências)
+### Prerequisites
 
-### Instalação
+- [Bun](https://bun.sh/) installed
+- PostgreSQL running
+- Node.js 18+ (for some dependencies)
+
+### Installation
 
 ```bash
-# Clone o repositório
+# Clone the repository
 git clone https://github.com/nobruf/elysia-better-auth.git
 cd app
 
-# Instale as dependências
+# Install dependencies
 bun install
 
-# Configure as variáveis de ambiente
+# Configure environment variables
 cp .env.example .env
-# Edite o .env com sua DATABASE_URL
+# Edit .env with your DATABASE_URL
 
-# Execute as migrações
+# Run migrations
 bun run db:migrate
 
-# Gere as tabelas do Better Auth
+# Generate Better Auth tables
 bun run db:auth:generate
 
-# Inicie o servidor de desenvolvimento
+# Start development server
 bun run dev
 ```
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 src/
-├── database/           # Configuração do banco
-│   ├── client.ts      # Cliente Drizzle
-│   ├── schema/        # Schemas das tabelas
-│   └── migrations/    # Migrações SQL
-├── modules/           # Módulos da aplicação
-│   ├── auth/         # Configuração Better Auth
-│   └── users/        # Controller de usuários
-├── plugins/          # Plugins globais
-│   ├── auth.ts      # Middleware de autenticação
-│   └── openapi.ts   # Configuração OpenAPI
-├── types/           # Tipos TypeScript
-└── index.ts        # Entrada da aplicação
+├── database/           # Database configuration
+│   ├── client.ts      # Drizzle client
+│   ├── schema/        # Table schemas
+│   └── migrations/    # SQL migrations
+├── modules/           # Application modules
+│   ├── auth/         # Better Auth configuration
+│   └── users/        # Users controller
+├── plugins/          # Global plugins
+│   ├── auth.ts      # Authentication middleware
+│   └── openapi.ts   # OpenAPI configuration
+├── types/           # TypeScript types
+└── index.ts        # Application entry point
 ```
 
 ## 🔌 API Endpoints
 
-### Autenticação
-```
-POST   /auth/sign-up     # Criar conta
-POST   /auth/sign-in     # Fazer login
-POST   /auth/sign-out    # Fazer logout
-GET    /auth/session     # Obter sessão atual
-```
+### Authentication
 
-### Usuários
 ```
-GET    /users/:id        # Buscar usuário por ID (requer auth)
+POST   /auth/sign-up     # Create account
+POST   /auth/sign-in     # Sign in
+POST   /auth/sign-out    # Sign out
+GET    /auth/session     # Get current session
 ```
 
-### Documentação
+### Users
+
 ```
-GET    /openapi          # Documentação Swagger UI
+GET    /users/:id        # Get user by ID (requires auth)
 ```
 
-## 🔐 Autenticação
+### Documentation
 
-O projeto usa **Better Auth** com as seguintes configurações:
+```
+GET    /openapi          # Swagger UI documentation
+```
 
-- **Email/Password**: Autenticação tradicional
-- **Sessões**: 24h de duração com cache de 5min
-- **Cookies seguros**: HTTPOnly e Secure
-- **Middleware global**: Injeta `user` automaticamente
+## 🔐 Authentication
 
-### Exemplo de uso:
+The project uses **Better Auth** with the following configurations:
+
+- **Email/Password**: Traditional authentication
+- **Sessions**: 24h duration with 5min cache
+- **Secure cookies**: HTTPOnly and Secure
+- **Global middleware**: Automatically injects `user`
+
+### Usage example:
 
 ```typescript
-// Controller protegido
+// Protected controller
 .get("/protected", ({ user }) => {
-  return { message: `Olá, ${user.name}!` };
+  return { message: `Hello, ${user.name}!` };
 }, { auth: true })
 ```
 
-## 🗄️ Banco de Dados
+## 🗄️ Database
 
-### Schema Principal
+### Main Schema
 
 **Users**
+
 - `id` - UUID v7 (primary key)
-- `name` - Nome do usuário
-- `email` - Email único
-- `emailVerified` - Status de verificação
-- `image` - Avatar (opcional)
+- `name` - User name
+- `email` - Unique email
+- `emailVerified` - Verification status
+- `image` - Avatar (optional)
 - `createdAt` / `updatedAt` - Timestamps
 
-### Comandos Úteis
+### Useful Commands
 
 ```bash
-# Gerar nova migração
+# Generate new migration
 bun run db:generate
 
-# Aplicar migrações
+# Apply migrations
 bun run db:migrate
 
-# Gerar tabelas do Better Auth
+# Generate Better Auth tables
 bun run db:auth:generate
 ```
 
-## 🧪 Desenvolvimento
+## 🧪 Development
 
-### Scripts Disponíveis
+### Available Scripts
 
 ```bash
-bun run dev              # Servidor desenvolvimento (watch mode)
-bun run db:generate      # Gerar migrações Drizzle
-bun run db:migrate       # Aplicar migrações
-bun run db:auth:generate # Gerar tabelas Better Auth
+bun run dev              # Development server (watch mode)
+bun run db:generate      # Generate Drizzle migrations
+bun run db:migrate       # Apply migrations
+bun run db:auth:generate # Generate Better Auth tables
 ```
 
-### Estrutura de Resposta
+### Response Structure
 
 ```json
 {
   "id": "01234567-89ab-cdef-0123-456789abcdef",
-  "name": "João Silva"
+  "name": "John Doe"
 }
 ```
 
-### Tratamento de Erros
+### Error Handling
 
 ```json
 {
@@ -163,30 +169,30 @@ bun run db:auth:generate # Gerar tabelas Better Auth
 }
 ```
 
-## 🔧 Configuração
+## 🔧 Configuration
 
-### Variáveis de Ambiente
+### Environment Variables
 
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/dbname
 ```
 
-### Personalização
+### Customization
 
-- **Sessões**: Modifique `session.expiresIn` em `src/modules/auth/index.ts`
-- **Validações**: Ajuste schemas Zod nos controllers
-- **CORS**: Configure no `src/index.ts` se necessário
+- **Sessions**: Modify `session.expiresIn` in `src/modules/auth/index.ts`
+- **Validations**: Adjust Zod schemas in controllers
+- **CORS**: Configure in `src/index.ts` if needed
 
 ## 🚀 Deploy
 
-### Produção
+### Production
 
-1. Configure `DATABASE_URL` para produção
-2. Execute migrações: `bun run db:migrate`
-3. Configure Redis (recomendado para sessões)
-4. Inicie: `bun src/index.ts`
+1. Configure `DATABASE_URL` for production
+2. Run migrations: `bun run db:migrate`
+3. Configure Redis (recommended for sessions)
+4. Start: `bun src/index.ts`
 
-### Docker (opcional)
+### Docker (optional)
 
 ```dockerfile
 FROM oven/bun:latest
@@ -197,25 +203,25 @@ EXPOSE 4000
 CMD ["bun", "src/index.ts"]
 ```
 
-## 📚 Recursos Adicionais
+## 📚 Additional Resources
 
-- [Documentação Elysia](https://elysiajs.com/introduction.html)
+- [Elysia Documentation](https://elysiajs.com/introduction.html)
 - [Better Auth Docs](https://www.better-auth.com/docs)
 - [Drizzle ORM Guide](https://orm.drizzle.team/docs/overview)
 - [Bun Documentation](https://bun.sh/docs)
 
-## 🤝 Contribuição
+## 🤝 Contributing
 
-1. Fork o projeto
-2. Crie uma branch: `git checkout -b feature/nova-feature`
-3. Commit: `git commit -m 'Add nova feature'`
-4. Push: `git push origin feature/nova-feature`
-5. Abra um Pull Request
+1. Fork the project
+2. Create a branch: `git checkout -b feature/new-feature`
+3. Commit: `git commit -m 'Add new feature'`
+4. Push: `git push origin feature/new-feature`
+5. Open a Pull Request
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
+This project is under the MIT license. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-⚡ **Feito com Bun + Elysia** - Velocidade e simplicidade em primeiro lugar!
+⚡ **Built with Bun + Elysia** - Speed and simplicity first!
