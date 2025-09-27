@@ -3,7 +3,8 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI } from "better-auth/plugins";
 import { organization } from "better-auth/plugins";
-import { ac, admin } from "./permissions";
+import { ac, admin, member, owner } from "./permissions";
+import { getActiveOrganization } from "./modules/organization";
 
 export const auth = betterAuth({
   basePath: "/auth",
@@ -12,7 +13,9 @@ export const auth = betterAuth({
     organization({
       ac,
       roles: {
+        owner,
         admin,
+        member,
       },
       async sendInvitationEmail(data) {
         const inviteLink = `http://localhost:4200/accept-invitation/${data.id}`;
@@ -53,6 +56,21 @@ export const auth = betterAuth({
     cookieCache: {
       enabled: true,
       maxAge: 60 * 5,
+    },
+  },
+  databaseHooks: {
+    session: {
+      create: {
+        before: async (session) => {
+          const organization = await getActiveOrganization(session.userId);
+          return {
+            data: {
+              ...session,
+              activeOrganizationId: organization!.id,
+            },
+          };
+        },
+      },
     },
   },
 });
